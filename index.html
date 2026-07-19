@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AgriSage — Bientôt disponible</title>
+<meta name="robots" content="noindex, nofollow">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600&display=swap');
+
+  :root {
+    --paper:   #F7F3E9;
+    --paper2:  #FCFAF3;
+    --ink:     #1B2E1F;
+    --ink-soft:#3C4A3E;
+    --rust:    #8B3A2E;
+    --olive:   #5C6B47;
+    --wheat:   #B98E33;
+    --line:    #DDD5C0;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; }
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    line-height: 1.6;
+  }
+
+  .card {
+    max-width: 480px;
+    text-align: center;
+  }
+
+  .mark {
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-size: 1.1rem;
+    letter-spacing: 0.02em;
+    color: var(--olive);
+    text-transform: uppercase;
+    margin-bottom: 2.5rem;
+  }
+  .mark span { color: var(--rust); }
+
+  h1 {
+    font-family: 'Fraunces', serif;
+    font-weight: 700;
+    font-size: clamp(1.8rem, 5vw, 2.6rem);
+    color: var(--ink);
+    margin-bottom: 1rem;
+    line-height: 1.25;
+  }
+
+  p.lede {
+    color: var(--ink-soft);
+    font-size: 1.05rem;
+    margin-bottom: 2rem;
+  }
+
+  .divider {
+    width: 48px;
+    height: 2px;
+    background: var(--wheat);
+    margin: 2rem auto;
+  }
+
+  .contact {
+    font-size: 0.95rem;
+    color: var(--ink-soft);
+  }
+  .contact a {
+    color: var(--rust);
+    text-decoration: none;
+    border-bottom: 1px solid var(--line);
+    transition: border-color 0.2s;
+  }
+  .contact a:hover { border-color: var(--rust); }
+
+  footer {
+    margin-top: 3rem;
+    font-size: 0.8rem;
+    color: var(--ink-soft);
+    opacity: 0.6;
+  }
+</style>
+</head>
+<body>
+  <div class="card">
+    <div class="mark">Agri<span>Sage</span></div>
+    <h1>La plateforme arrive bientôt.</h1>
+    <p class="lede">
+      AgriSage prépare le lancement officiel de son API de conseil phytosanitaire
+      pour le marché agricole marocain.
+    </p>
+    <div class="divider"></div>
+    <p class="contact">
+      Pour toute question ou demande d'accès anticipé,
+      écrivez-nous à <a href="mailto:ycharhabaili@gmail.com?subject=AgriSage%20-%20Demande%20d%27acces">ycharhabaili@gmail.com</a>
+    </p>
+    <footer>&copy; 2026 AgriSage · Registre phytosanitaire ONSSA</footer>
+  </div>
+</body>
+</html>
