@@ -88,6 +88,23 @@
     color: var(--ink-soft);
     opacity: 0.6;
   }
+
+  .formulaire { margin-top: 1.5rem; text-align: left; }
+  .formulaire input {
+    width: 100%; padding: 0.65rem 0.8rem; margin-bottom: 0.7rem;
+    border: 1px solid var(--line); border-radius: 6px; font-family: 'Inter', sans-serif;
+    font-size: 0.9rem; background: var(--paper2); color: var(--ink); box-sizing: border-box;
+  }
+  .formulaire button {
+    width: 100%; padding: 0.7rem 0; background: var(--olive); color: var(--paper2);
+    border: none; border-radius: 6px; font-family: 'Inter', sans-serif; font-weight: 600;
+    font-size: 0.9rem; cursor: pointer; transition: background 0.2s;
+  }
+  .formulaire button:hover { background: var(--ink-soft); }
+  .formulaire button:disabled { opacity: 0.6; cursor: default; }
+  .msg-formulaire { font-size: 0.85rem; margin-top: 0.6rem; text-align: center; }
+  .msg-formulaire.ok { color: var(--olive); }
+  .msg-formulaire.err { color: var(--rust); }
 </style>
 </head>
 <body>
@@ -99,10 +116,62 @@
       pour le marché agricole marocain.
     </p>
     <div class="divider"></div>
-    <p class="contact">
-      Pour toute question ou demande d'accès anticipé,
-      écrivez-nous à <a href="mailto:ycharhabaili@gmail.com?subject=AgriSage%20-%20Demande%20d%27acces">ycharhabaili@gmail.com</a>
+    <div class="formulaire" id="form-demande">
+      <input type="text" id="fd-nom" placeholder="Nom / Exploitation *" />
+      <input type="email" id="fd-email" placeholder="Email *" />
+      <input type="tel" id="fd-telephone" placeholder="Telephone (optionnel)" />
+      <button id="fd-bouton" onclick="envoyerDemandeAcces()">Demander un acces anticipe</button>
+      <div id="fd-message" class="msg-formulaire"></div>
+    </div>
+    <p class="contact" style="margin-top:1rem;">
+      Ou ecrivez-nous directement a
+      <a href="mailto:ycharhabaili@gmail.com?subject=AgriSage%20-%20Demande%20d%27acces">ycharhabaili@gmail.com</a>
     </p>
+    <script>
+      async function envoyerDemandeAcces() {
+        var nom = document.getElementById('fd-nom').value.trim();
+        var email = document.getElementById('fd-email').value.trim();
+        var telephone = document.getElementById('fd-telephone').value.trim();
+        var bouton = document.getElementById('fd-bouton');
+        var message = document.getElementById('fd-message');
+        message.textContent = '';
+        message.className = 'msg-formulaire';
+
+        if (!nom || !email) {
+          message.textContent = 'Le nom et l\'email sont obligatoires.';
+          message.className = 'msg-formulaire err';
+          return;
+        }
+
+        bouton.disabled = true;
+        bouton.textContent = 'Envoi en cours...';
+
+        try {
+          var res = await fetch('https://agrisage-production-9611.up.railway.app/v1/demande-abonnement', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ nom: nom, email: email, telephone: telephone, source: 'landing' }),
+          });
+          var data = await res.json();
+          if (data.success) {
+            message.textContent = data.message || 'Demande envoyee avec succes.';
+            message.className = 'msg-formulaire ok';
+            document.getElementById('fd-nom').value = '';
+            document.getElementById('fd-email').value = '';
+            document.getElementById('fd-telephone').value = '';
+          } else {
+            message.textContent = (data.error && data.error.message) || 'Une erreur est survenue.';
+            message.className = 'msg-formulaire err';
+          }
+        } catch (e) {
+          message.textContent = 'Impossible de contacter le serveur. Ecrivez-nous par email.';
+          message.className = 'msg-formulaire err';
+        } finally {
+          bouton.disabled = false;
+          bouton.textContent = 'Demander un acces anticipe';
+        }
+      }
+    </script>
     <footer>&copy; 2026 AgriSage · Registre phytosanitaire ONSSA</footer>
   </div>
 </body>
